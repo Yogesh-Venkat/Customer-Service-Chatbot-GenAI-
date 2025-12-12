@@ -19,7 +19,7 @@ import google.generativeai as genai
 import streamlit as st
 from pathlib import Path
 from dotenv import load_dotenv
-import os
+
 
 
 
@@ -28,8 +28,7 @@ import os
 # ---------- CONFIG ----------
 THIS_FILE = Path(__file__).resolve()
 REPO_ROOT = THIS_FILE.parent
-API_KEY = REPO_ROOT / "GOOGLE_API_KEY.env"
-load_dotenv(API_KEY)
+api_key = os.getenv("GOOGLE_API_KEY")
 CHROMA_DB_DIR = "chroma_db"
 COLLECTION_NAME = "kb_chunks"
 
@@ -215,7 +214,7 @@ def query_chroma(collection, embedder, query: str, top_k: int = TOP_K):
 @st.cache_resource(show_spinner=False)
 def init_gemini():
     
-    api_key = os.getenv("GOOGLE_API_KEY")
+    api_key = api_key
     if not api_key:
         raise ValueError("Please set the environment variable GOOGLE_API_KEY before running this app.")
     genai.configure(api_key=api_key)
