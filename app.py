@@ -28,7 +28,12 @@ from dotenv import load_dotenv
 # ---------- CONFIG ----------
 THIS_FILE = Path(__file__).resolve()
 REPO_ROOT = THIS_FILE.parent
-api_key = os.getenv("GOOGLE_API_KEY")
+_local_dotenv = REPO_ROOT / "GOOGLE_API_KEY.env"
+if _local_dotenv.exists():
+    load_dotenv(dotenv_path=str(_local_dotenv))
+else:
+    # optionally load default .env (won't overwrite existing env vars)
+    load_dotenv()
 CHROMA_DB_DIR = "chroma_db"
 COLLECTION_NAME = "kb_chunks"
 
@@ -214,7 +219,7 @@ def query_chroma(collection, embedder, query: str, top_k: int = TOP_K):
 @st.cache_resource(show_spinner=False)
 def init_gemini():
     
-    api_key = api_key
+    api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
         raise ValueError("Please set the environment variable GOOGLE_API_KEY before running this app.")
     genai.configure(api_key=api_key)
