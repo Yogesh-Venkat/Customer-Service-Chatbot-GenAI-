@@ -8,3 +8,4 @@ pandas
 torch
 protobuf
 typing-extensions
+python-dotenv
