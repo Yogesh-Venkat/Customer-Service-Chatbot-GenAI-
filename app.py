@@ -377,7 +377,7 @@ def main():
 
         query = st.text_input(
             "🔍 What would you like to know?",
-            placeholder="e.g., How do I track my order? What's your return policy?",
+            placeholder="e.g., What's your return policy?",
             key="query_input"
         )
         
@@ -569,4 +569,5 @@ def main():
                 st.dataframe(per_q_df, use_container_width=True)
 
 if __name__ == "__main__":
+
     main()
